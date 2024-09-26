@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
   end
 
   # https://stackoverflow.com/questions/38445625/rspec-class-spy-on-rails-mailer
+  # 上の例より下のコードの方が、シンプルになった気がする
   context '.new' do
     it 'say Good morning' do
       # これだけで、partial doubleになるし、fetchメソッドもそのまま
