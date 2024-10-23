@@ -10,14 +10,17 @@ require 'rails_helper'
 #
 #
 RSpec.describe User, type: :model do
-  it 'まず初めに、依存してるクラスのnew' do
+  it 'まず初めに、依存してるクラスのnewに引数を入れない場合を考える' do
+    # 依存してるクラスのnewをstubして、ダブルを仕込む
     moc = instance_double(ExternalApi)
-
-    # 本当はhelloって返ってくるところを、welcomに変えている
     allow(ExternalApi).to receive(:new).and_return(moc)
-    allow(moc).to receive(:fetch).and_return('welcom')
 
-    expect(User.new.fetch_external).to eq('welcom')
+    # 冗長だけど、↓のコードがないと
+    # #<InstanceDouble(ExternalApi) (anonymous)> received unexpected message :fetch with (no args)
+    # が発生する
+    allow(moc).to receive(:fetch).and_return('hello')
+
+    expect(User.new.fetch_external).to eq('hello')
   end
 
   it '依存しているクラスのnewをスタブ化して、newの引数を検査する' do
