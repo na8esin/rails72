@@ -4,4 +4,10 @@ class ExternalApi
   def fetch
     "hello"
   end
+
+  class << self
+    def greet
+      "good evening"
+    end
+  end
 end

@@ -1,4 +1,14 @@
 class User < ApplicationRecord
+  class << self
+    def greet
+      p "----------"
+      p ExternalApi
+      p "----------"
+
+      ExternalApi.greet
+    end
+  end
+
   def fetch_external
     ExternalApi.new.fetch
   end
