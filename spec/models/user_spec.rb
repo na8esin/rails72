@@ -10,9 +10,11 @@ require 'rails_helper'
 # 断片的にコードをブログに載せるときは、described_classだとわからないので、あまり使ってない
 
 RSpec.describe User, type: :model do
+  fixtures :users
+
   # こんなcontrollerのメソッドがあったとする
   def index
-    User.new.fetch_external_with_initial_value
+    users(:morning_man).fetch_external_with_initial_value
   end
 
   it 'newはクラスメソッドだからclass_doubleを使う？' do

@@ -10,6 +10,9 @@ class User < ApplicationRecord
   end
 
   def fetch_external_with_initial_value
-    ExternalApi.new(greet: "Good morning").fetch
+    greet = morning ? "Good morning" : "Hi"
+
+    # 外部のapiにリクエストしているつもり
+    ExternalApi.new(greet:).fetch
   end
 end
