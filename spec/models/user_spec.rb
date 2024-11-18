@@ -6,16 +6,11 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   fixtures :users
 
-  # こんなcontrollerのメソッドがあったとする
-  def index
-    users(:morning_man).fetch_external_with_initial_value
-  end
-
   it 'newはクラスメソッドだからclass_doubleを使う？' do
     class_double(ExternalApi).as_stubbed_const
 
     # #<ClassDouble(ExternalApi) (anonymous)> received unexpected message :new with ({:greet=>"Good morning"})
-    index
+    users(:morning_man).fetch_external_with_initial_value
 
     expect(ExternalApi).to have_received(:new).with(greet: "Good morning")
   end
@@ -23,7 +18,7 @@ RSpec.describe User, type: :model do
   it 'ExternalApiのnewとfetchを補った後で、as_stubbed_constする' do
     class_double(ExternalApi, new: instance_double(ExternalApi, fetch: 'hello')).as_stubbed_const
 
-    index
+    users(:morning_man).fetch_external_with_initial_value
 
     expect(ExternalApi).to have_received(:new).with(greet: "Good morning")
   end
@@ -32,7 +27,7 @@ RSpec.describe User, type: :model do
     # これだけで、partial doubleになるし、fetchメソッドもそのまま
     allow(ExternalApi).to receive(:new).and_call_original
 
-    index
+    users(:morning_man).fetch_external_with_initial_value
 
     expect(ExternalApi).to have_received(:new).with(greet: "Good morning")
   end
