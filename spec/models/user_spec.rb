@@ -24,7 +24,9 @@ RSpec.describe User, type: :model do
   end
 
   it '依存しているクラスのnewをスタブ化して、newの引数を検査する' do
-    # これだけで、partial doubleになるし、fetchメソッドもそのまま
+    # allowを使うと特定のメソッドだけスタブ化できる。
+    # さらにand_call_originalを使ってnewが元々の動きをすることで、
+    # その後のfetchメソッドの動きにも影響を与えない。
     allow(ExternalApi).to receive(:new).and_call_original
 
     users(:morning_man).fetch_external_with_initial_value
